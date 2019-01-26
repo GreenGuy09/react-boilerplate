@@ -24,6 +24,7 @@ import LoginPage from 'containers/LoginPage/Loadable';
 import SignUpPage from 'containers/SignUpPage/Loadable';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
+import AuthenticatedRoute from '../../components/AuthenticatedRoute/AuthenticatedRoute';
 import {
   makeSelectIsAuthenticated,
   makeSelectIsAuthenticating,
@@ -32,6 +33,7 @@ import GlobalStyle from '../../global-styles';
 import { logout, userHasAuthenticated } from '../LoginPage/actions';
 import reducer from '../LoginPage/reducer';
 import saga from '../LoginPage/saga';
+import UnauthenticatedRoute from '../../components/UnauthenticatedRoute/UnauthenticatedRoute';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -56,19 +58,36 @@ class App extends React.PureComponent {
 
   render() {
     const { isAuthenticated, onLogout } = this.props;
-    const headerProps = {
+    const childProps = {
       isAuthenticated,
       onLogout,
     };
 
     return (
       <AppWrapper>
-        <Header {...headerProps} />
+        <Header {...childProps} />
         <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/features" component={FeaturePage} />
-          <Route path="/login" component={LoginPage} />
-          <Route path="/signup" component={SignUpPage} />
+          <AuthenticatedRoute
+            exact
+            path="/"
+            component={HomePage}
+            props={childProps}
+          />
+          <AuthenticatedRoute
+            path="/features"
+            component={FeaturePage}
+            props={childProps}
+          />
+          <UnauthenticatedRoute
+            path="/login"
+            component={LoginPage}
+            props={childProps}
+          />
+          <UnauthenticatedRoute
+            path="/signup"
+            component={SignUpPage}
+            props={childProps}
+          />
           <Route path="" component={NotFoundPage} />
         </Switch>
         <Footer />
