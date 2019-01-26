@@ -27,10 +27,14 @@ import LanguageProvider from 'containers/LanguageProvider';
 import '!file-loader?name=[name].[ext]!./images/favicon.ico';
 import 'file-loader?name=.htaccess!./.htaccess'; // eslint-disable-line import/extensions
 
+import Amplify from 'aws-amplify';
+
 import configureStore from './configureStore';
 
 // Import i18n messages
 import { translationMessages } from './i18n';
+
+import config from './config';
 
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
@@ -45,6 +49,16 @@ openSansObserver.load().then(() => {
 const initialState = {};
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
+
+Amplify.configure({
+  Auth: {
+    mandatorySignIn: true,
+    region: config.cognito.REGION,
+    userPoolId: config.cognito.USER_POOL_ID,
+    identityPoolId: config.cognito.IDENTITY_POOL_ID,
+    userPoolWebClientId: config.cognito.APP_CLIENT_ID,
+  },
+});
 
 const render = messages => {
   ReactDOM.render(
