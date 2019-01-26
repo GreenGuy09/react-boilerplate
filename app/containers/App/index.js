@@ -9,7 +9,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Switch, Route, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -17,14 +17,9 @@ import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import HomePage from 'containers/HomePage/Loadable';
-import FeaturePage from 'containers/FeaturePage/Loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import LoginPage from 'containers/LoginPage/Loadable';
-import SignUpPage from 'containers/SignUpPage/Loadable';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
-import AuthenticatedRoute from '../../components/AuthenticatedRoute/AuthenticatedRoute';
+
 import {
   makeSelectIsAuthenticated,
   makeSelectIsAuthenticating,
@@ -33,7 +28,7 @@ import GlobalStyle from '../../global-styles';
 import { logout, userHasAuthenticated } from '../LoginPage/actions';
 import reducer from '../LoginPage/reducer';
 import saga from '../LoginPage/saga';
-import UnauthenticatedRoute from '../../components/UnauthenticatedRoute/UnauthenticatedRoute';
+import Routes from './Routes';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -66,30 +61,7 @@ class App extends React.PureComponent {
     return (
       <AppWrapper>
         <Header {...childProps} />
-        <Switch>
-          <AuthenticatedRoute
-            exact
-            path="/"
-            component={HomePage}
-            props={childProps}
-          />
-          <AuthenticatedRoute
-            path="/features"
-            component={FeaturePage}
-            props={childProps}
-          />
-          <UnauthenticatedRoute
-            path="/login"
-            component={LoginPage}
-            props={childProps}
-          />
-          <UnauthenticatedRoute
-            path="/signup"
-            component={SignUpPage}
-            props={childProps}
-          />
-          <Route path="" component={NotFoundPage} />
-        </Switch>
+        <Routes childProps={childProps} />
         <Footer />
         <GlobalStyle />
       </AppWrapper>
