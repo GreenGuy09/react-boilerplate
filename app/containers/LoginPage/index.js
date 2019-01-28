@@ -29,10 +29,6 @@ import reducer from './reducer';
 import saga from './saga';
 
 export class LoginPage extends React.PureComponent {
-  handleSubmit = async event => {
-    event.preventDefault();
-  };
-
   render() {
     return (
       <div>
