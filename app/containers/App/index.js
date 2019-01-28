@@ -10,7 +10,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
-import { Auth } from 'aws-amplify';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -25,10 +24,12 @@ import {
   makeSelectIsAuthenticating,
 } from '../LoginPage/selectors';
 import GlobalStyle from '../../global-styles';
-import { logout, userHasAuthenticated } from '../LoginPage/actions';
-import reducer from '../LoginPage/reducer';
-import saga from '../LoginPage/saga';
+import { logout } from '../LoginPage/actions';
+import reducer from './reducer';
+import saga from './saga';
 import Routes from './Routes';
+import { makeSelectUserProfile } from './selectors';
+import { loadUserProfile } from './actions';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -42,8 +43,7 @@ const AppWrapper = styled.div`
 class App extends React.PureComponent {
   async componentDidMount() {
     try {
-      await Auth.currentSession();
-      this.props.onUserHasAuthenticated(true);
+      await this.props.onLoadUserProfile();
     } catch (e) {
       if (e !== 'No current user') {
         alert(e);
@@ -52,10 +52,11 @@ class App extends React.PureComponent {
   }
 
   render() {
-    const { isAuthenticated, onLogout } = this.props;
+    const { isAuthenticated, onLogout, userProfile } = this.props;
     const childProps = {
       isAuthenticated,
       onLogout,
+      userProfile,
     };
 
     return (
@@ -72,22 +73,23 @@ class App extends React.PureComponent {
 App.propTypes = {
   isAuthenticated: PropTypes.bool,
   isAuthenticating: PropTypes.bool,
+  userProfile: PropTypes.object,
   onLogout: PropTypes.func,
   onUserHasAuthenticated: PropTypes.func,
+  onLoadUserProfile: PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
     onLogout: () => dispatch(logout()),
-    onUserHasAuthenticated: evt => {
-      dispatch(userHasAuthenticated(evt));
-    },
+    onLoadUserProfile: () => dispatch(loadUserProfile()),
   };
 }
 
 const mapStateToProps = createStructuredSelector({
   isAuthenticated: makeSelectIsAuthenticated(),
   isAuthenticating: makeSelectIsAuthenticating(),
+  userProfile: makeSelectUserProfile(),
 });
 
 const withConnect = connect(
@@ -95,8 +97,8 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'login', reducer });
-const withSaga = injectSaga({ key: 'login', saga });
+const withReducer = injectReducer({ key: 'global', reducer });
+const withSaga = injectSaga({ key: 'global', saga });
 
 export default compose(
   withRouter,

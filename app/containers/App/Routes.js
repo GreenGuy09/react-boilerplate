@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import HomePage from 'containers/HomePage/Loadable';
+import UserSettingsPage from 'containers/UserSettingsPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import LoginPage from 'containers/LoginPage/Loadable';
 import SignUpPage from 'containers/SignUpPage/Loadable';
@@ -15,6 +16,12 @@ export default ({ childProps }) => (
       exact
       path="/"
       component={HomePage}
+      props={childProps}
+    />
+    <AuthenticatedRoute
+      exact
+      path="/settings"
+      component={UserSettingsPage}
       props={childProps}
     />
     <UnauthenticatedRoute
