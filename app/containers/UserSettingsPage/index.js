@@ -9,7 +9,7 @@ import { compose } from 'redux';
 import H2 from 'components/H2';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import messages from './messages';
-import { makeSelectEmail } from '../LoginPage/selectors';
+import { makeSelectUserProfile } from '../App/selectors';
 
 export class UserSettingsPage extends React.PureComponent {
   render() {
@@ -29,7 +29,11 @@ export class UserSettingsPage extends React.PureComponent {
           <section>
             <FormGroup controlId="email" bsSize="large">
               <ControlLabel>Email</ControlLabel>
-              <FormControl type="email" value={this.props.email} readOnly />
+              <FormControl
+                type="email"
+                value={this.props.userProfile.email}
+                readOnly
+              />
             </FormGroup>
           </section>
         </div>
@@ -39,11 +43,11 @@ export class UserSettingsPage extends React.PureComponent {
 }
 
 UserSettingsPage.propTypes = {
-  email: PropTypes.string,
+  userProfile: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
-  email: makeSelectEmail(),
+  userProfile: makeSelectUserProfile(),
 });
 
 const withConnect = connect(mapStateToProps);
