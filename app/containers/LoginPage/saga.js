@@ -12,7 +12,7 @@ import {
   makeSelectEmail,
   makeSelectPassword,
 } from 'containers/LoginPage/selectors';
-import { loadUserProfile } from '../App/actions';
+import { userProfileLoaded } from '../App/actions';
 
 /**
  * Login to Cognito
@@ -23,7 +23,10 @@ export function* loginCognito() {
 
   try {
     yield Auth.signIn(email, password);
-    yield put(loadUserProfile());
+    const userSession = yield Auth.currentSession();
+    const idToken = yield userSession.idToken.payload;
+    yield put(userProfileLoaded(idToken));
+    yield put(userHasAuthenticated(true));
     yield put(push('/'));
   } catch (err) {
     yield put(loginFailed(err));
