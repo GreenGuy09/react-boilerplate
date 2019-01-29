@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
@@ -57,6 +58,7 @@ export class LoginPage extends React.PureComponent {
                 onChange={this.props.onChangePassword}
               />
             </FormGroup>
+            <Link to="/login/reset">Forgot password?</Link>
             <LoaderButton
               block
               bsSize="large"

@@ -18,13 +18,7 @@ import { LOAD_USER_PROFILE, LOAD_USER_PROFILE_SUCCESS } from './constants';
 const initialState = fromJS({
   isLoading: false,
   error: false,
-  userProfile: {
-    email: 'TestEmail',
-  },
-  currentUser: false,
-  userData: {
-    repositories: false,
-  },
+  userProfile: null,
 });
 
 function appReducer(state = initialState, action) {
