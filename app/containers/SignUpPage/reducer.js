@@ -15,11 +15,13 @@ import {
   CHANGE_EMAIL,
   CHANGE_PASSWORD,
   USER_SIGN_UP,
-  CHANGE_CONFIRM_PASSWORD,
-  USER_HAS_SIGNED_UP,
+  USER_SIGN_UP_SUCCESS,
   USER_SIGN_UP_ERROR,
+  CHANGE_CONFIRM_PASSWORD,
   CHANGE_CONFIRMATION_CODE,
   USER_CONFIRM_SIGN_UP,
+  USER_CONFIRM_SIGN_UP_SUCCESS,
+  USER_CONFIRM_SIGN_UP_ERROR,
 } from './constants';
 
 export const initialState = fromJS({
@@ -41,13 +43,20 @@ function signUpReducer(state = initialState, action) {
       return state.set('confirmPassword', action.confirmPassword);
     case USER_SIGN_UP:
       return state.set('isLoading', true);
-    case USER_HAS_SIGNED_UP:
+    case USER_SIGN_UP_SUCCESS:
       return state.set('isLoading', false).set('newUser', action.newUser);
     case USER_SIGN_UP_ERROR:
-      return state.set('isLoading', false).set('error', action.message);
+      return state
+        .set('isLoading', false)
+        .set('newUser', null)
+        .set('error', action.message);
     case CHANGE_CONFIRMATION_CODE:
       return state.set('confirmationCode', action.confirmationCode);
     case USER_CONFIRM_SIGN_UP:
+      return state.set('isLoading', false).set('newUser', null);
+    case USER_CONFIRM_SIGN_UP_SUCCESS:
+      return state.set('isLoading', false);
+    case USER_CONFIRM_SIGN_UP_ERROR:
       return state.set('isLoading', false);
     default:
       return state;

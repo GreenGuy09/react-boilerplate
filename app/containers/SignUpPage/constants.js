@@ -14,11 +14,14 @@ export const CHANGE_PASSWORD = 'caregivers/SignUpPage/CHANGE_PASSWORD';
 export const CHANGE_CONFIRM_PASSWORD =
   'caregivers/SignUpPage/CHANGE_CONFIRM_PASSWORD';
 export const USER_SIGN_UP = 'caregivers/SignUpPage/USER_SIGN_UP';
-export const USER_HAS_SIGNED_UP = 'caregivers/SignUpPage/USER_HAS_SIGNED_UP';
+export const USER_SIGN_UP_SUCCESS =
+  'caregivers/SignUpPage/USER_SIGN_UP_SUCCESS';
 export const USER_SIGN_UP_ERROR = 'caregivers/SignUpPage/USER_SIGN_UP_ERROR';
 export const CHANGE_CONFIRMATION_CODE =
   'caregivers/SignUpPage/CHANGE_CONFIRMATION_CODE';
 export const USER_CONFIRM_SIGN_UP =
   'caregivers/SignUpPage/USER_CONFIRM_SIGN_UP';
-export const USER_HAS_CONFIRMED_SIGN_UP =
-  'caregiver/SignUpPage/USER_HAS_CONFIRMED_SIGN_UP';
+export const USER_CONFIRM_SIGN_UP_SUCCESS =
+  'caregiver/SignUpPage/USER_CONFIRM_SIGN_UP_SUCCESS';
+export const USER_CONFIRM_SIGN_UP_ERROR =
+  'caregiver/SignUpPage/USER_CONFIRM_SIGN_UP_ERROR';

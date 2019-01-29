@@ -20,11 +20,11 @@ import {
   CHANGE_PASSWORD,
   CHANGE_CONFIRM_PASSWORD,
   USER_SIGN_UP,
-  USER_HAS_SIGNED_UP,
+  USER_SIGN_UP_SUCCESS,
   USER_SIGN_UP_ERROR,
   CHANGE_CONFIRMATION_CODE,
   USER_CONFIRM_SIGN_UP,
-  USER_HAS_CONFIRMED_SIGN_UP,
+  USER_CONFIRM_SIGN_UP_SUCCESS,
 } from './constants';
 
 /**
@@ -75,9 +75,9 @@ export function signUp() {
   };
 }
 
-export function userHasSignedUp(newUser) {
+export function signUpSuccess(newUser) {
   return {
-    type: USER_HAS_SIGNED_UP,
+    type: USER_SIGN_UP_SUCCESS,
     newUser,
   };
 }
@@ -102,8 +102,15 @@ export function confirmSignUp() {
   };
 }
 
-export function userHasConfirmedSignUp() {
+export function confirmSignUpSuccess() {
   return {
-    type: USER_HAS_CONFIRMED_SIGN_UP,
+    type: USER_CONFIRM_SIGN_UP_SUCCESS,
+  };
+}
+
+export function confirmSignUpError(message) {
+  return {
+    type: USER_CONFIRM_SIGN_UP_SUCCESS,
+    message,
   };
 }
