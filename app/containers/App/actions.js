@@ -15,11 +15,20 @@
  *    }
  */
 
-import { LOAD_USER_PROFILE, LOAD_USER_PROFILE_SUCCESS } from './constants';
+import {
+  LOAD_USER_PROFILE_REQUEST,
+  LOAD_USER_PROFILE_SUCCESS,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILURE,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+} from './constants';
 
 export function loadUserProfile() {
   return {
-    type: LOAD_USER_PROFILE,
+    type: LOAD_USER_PROFILE_REQUEST,
   };
 }
 
@@ -27,5 +36,42 @@ export function userProfileLoaded(userProfile) {
   return {
     type: LOAD_USER_PROFILE_SUCCESS,
     userProfile,
+  };
+}
+
+export function login() {
+  return {
+    type: LOGIN_REQUEST,
+  };
+}
+
+export function loginSuccess() {
+  return {
+    type: LOGIN_SUCCESS,
+  };
+}
+
+export function loginFailure(error) {
+  return {
+    type: LOGIN_FAILURE,
+    error,
+  };
+}
+
+export function logout() {
+  return {
+    type: LOGOUT_REQUEST,
+  };
+}
+
+export function logoutSuccess() {
+  return {
+    type: LOGOUT_SUCCESS,
+  };
+}
+
+export function logoutFailure() {
+  return {
+    type: LOGOUT_FAILURE,
   };
 }

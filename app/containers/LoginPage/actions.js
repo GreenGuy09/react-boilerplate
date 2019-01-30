@@ -15,16 +15,7 @@
  *    }
  */
 
-import {
-  CHANGE_EMAIL,
-  CHANGE_PASSWORD,
-  USER_LOGIN,
-  USER_HAS_AUTHENTICATED,
-  USER_LOGIN_ERROR,
-  USER_LOGOUT,
-  USER_LOGOUT_ERROR,
-  USER_LOGOUT_SUCCESS,
-} from './constants';
+import { CHANGE_EMAIL, CHANGE_PASSWORD } from './constants';
 
 /**
  * Changes the input field of the form
@@ -51,44 +42,5 @@ export function changePassword(password) {
   return {
     type: CHANGE_PASSWORD,
     password,
-  };
-}
-
-export function login() {
-  return {
-    type: USER_LOGIN,
-  };
-}
-
-export function userHasAuthenticated(authenticated) {
-  return {
-    type: USER_HAS_AUTHENTICATED,
-    authenticated,
-  };
-}
-
-export function loginFailed(error) {
-  return {
-    type: USER_LOGIN_ERROR,
-    error,
-  };
-}
-
-export function logout() {
-  return {
-    type: USER_LOGOUT,
-  };
-}
-
-export function logoutSucceeded() {
-  return {
-    type: USER_LOGOUT_SUCCESS,
-  };
-}
-
-export function logoutFailed(error) {
-  return {
-    type: USER_LOGOUT_ERROR,
-    error,
   };
 }

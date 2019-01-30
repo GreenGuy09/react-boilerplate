@@ -11,19 +11,21 @@ const selectRouter = state => state.get('router');
 const makeSelectUserProfile = () =>
   createSelector(selectGlobal, globalState => globalState.get('userProfile'));
 
-const makeSelectCurrentUser = () =>
-  createSelector(selectGlobal, globalState => globalState.get('currentUser'));
+const makeSelectIsAuthenticated = () =>
+  createSelector(selectGlobal, globalState =>
+    globalState.get('isAuthenticated'),
+  );
 
-const makeSelectLoading = () =>
-  createSelector(selectGlobal, globalState => globalState.get('loading'));
+const makeSelectIsAuthenticating = () =>
+  createSelector(selectGlobal, globalState =>
+    globalState.get('isAuthenticating'),
+  );
+
+const makeSelectIsLoading = () =>
+  createSelector(selectGlobal, globalState => globalState.get('isLoading'));
 
 const makeSelectError = () =>
   createSelector(selectGlobal, globalState => globalState.get('error'));
-
-const makeSelectRepos = () =>
-  createSelector(selectGlobal, globalState =>
-    globalState.getIn(['userData', 'repositories']),
-  );
 
 const makeSelectLocation = () =>
   createSelector(selectRouter, routerState =>
@@ -33,9 +35,9 @@ const makeSelectLocation = () =>
 export {
   selectGlobal,
   makeSelectUserProfile,
-  makeSelectCurrentUser,
-  makeSelectLoading,
+  makeSelectIsLoading,
   makeSelectError,
-  makeSelectRepos,
   makeSelectLocation,
+  makeSelectIsAuthenticated,
+  makeSelectIsAuthenticating,
 };

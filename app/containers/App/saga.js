@@ -1,32 +1,79 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { take, call, put, fork, select } from 'redux-saga/effects';
 import { push } from 'connected-react-router/immutable';
-import {
-  logoutFailed,
-  userHasAuthenticated,
-} from 'containers/LoginPage/actions';
 import { Auth } from 'aws-amplify';
-import { userProfileLoaded } from './actions';
-import { LOAD_USER_PROFILE } from './constants';
-import { USER_LOGOUT } from '../LoginPage/constants';
+import {
+  userProfileLoaded,
+  loginSuccess,
+  loginFailure,
+  logoutSuccess,
+  logoutFailure,
+} from './actions';
+import {
+  LOAD_USER_PROFILE_REQUEST,
+  LOGIN_REQUEST,
+  LOGOUT_REQUEST,
+} from './constants';
+import { makeSelectEmail, makeSelectPassword } from '../LoginPage/selectors';
 
-export function* loadUserProfile() {
-  const userSession = yield Auth.currentSession();
-  const idToken = yield userSession.idToken.payload;
-  yield put(userProfileLoaded(idToken));
-  yield put(userHasAuthenticated(true));
+export function* login() {
+  const email = yield select(makeSelectEmail());
+  const password = yield select(makeSelectPassword());
+
+  try {
+    yield Auth.signIn(email, password);
+    const userSession = yield Auth.currentSession();
+    const idToken = yield userSession.idToken.payload;
+    yield put(userProfileLoaded(idToken));
+    yield put(loginSuccess());
+    yield put(push('/'));
+  } catch (err) {
+    yield put(loginFailure(err));
+  }
+}
+
+export function* loginFlow() {
+  while (true) {
+    yield take(LOGIN_REQUEST);
+    yield call(login);
+  }
 }
 
 export function* logout() {
   try {
     yield Auth.signOut();
-    yield put(userHasAuthenticated(false));
-    yield put(push('/login'));
+    yield put(logoutSuccess());
   } catch (err) {
-    yield put(logoutFailed(err));
+    yield put(logoutFailure(err.message));
   }
 }
 
-export default function* global() {
-  yield takeLatest(LOAD_USER_PROFILE, loadUserProfile);
-  yield takeLatest(USER_LOGOUT, logout);
+export function* logoutFlow() {
+  while (true) {
+    yield take(LOGOUT_REQUEST);
+    yield call(logout);
+  }
+}
+
+export function* loadUserProfile() {
+  try {
+    const userSession = yield Auth.currentSession();
+    const idToken = yield userSession.idToken.payload;
+    yield put(userProfileLoaded(idToken));
+    yield put(loginSuccess());
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export function* loadUserProfileFlow() {
+  while (true) {
+    yield take(LOAD_USER_PROFILE_REQUEST);
+    yield call(loadUserProfile);
+  }
+}
+
+export default function* root() {
+  yield fork(loginFlow);
+  yield fork(logoutFlow);
+  yield fork(loadUserProfileFlow);
 }

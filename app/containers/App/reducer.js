@@ -12,10 +12,22 @@
 
 import { fromJS } from 'immutable';
 
-import { LOAD_USER_PROFILE, LOAD_USER_PROFILE_SUCCESS } from './constants';
+import {
+  LOAD_USER_PROFILE_REQUEST,
+  LOAD_USER_PROFILE_SUCCESS,
+  LOAD_USER_PROFILE_FAILURE,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILURE,
+} from './constants';
 
 // The initial state of the App
 const initialState = fromJS({
+  isAuthenticated: false,
+  isAuthenticating: true,
   isLoading: false,
   error: false,
   userProfile: null,
@@ -23,12 +35,29 @@ const initialState = fromJS({
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
-    case LOAD_USER_PROFILE:
+    case LOGIN_REQUEST:
+      return state.set('isLoading', true).set('isAuthenticating', true);
+    case LOGIN_SUCCESS:
+      return state
+        .set('isLoading', false)
+        .set('isAuthenticated', true)
+        .set('isAuthenticating', false);
+    case LOGIN_FAILURE:
+      return state.set('isLoading', false).set('isAuthenticated', false);
+    case LOGOUT_REQUEST:
+      return state.set('isLoading', true);
+    case LOGOUT_SUCCESS:
+      return initialState;
+    case LOGOUT_FAILURE:
+      return state.set('isLoading', false).set('isAuthenticated', false);
+    case LOAD_USER_PROFILE_REQUEST:
       return state.set('isLoading', true);
     case LOAD_USER_PROFILE_SUCCESS:
       return state
         .set('isLoading', false)
         .set('userProfile', action.userProfile);
+    case LOAD_USER_PROFILE_FAILURE:
+      return state.set('isLoading', false).set('userProfile', null);
     default:
       return state;
   }

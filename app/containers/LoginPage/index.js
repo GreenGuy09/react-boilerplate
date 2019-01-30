@@ -14,20 +14,18 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 
 import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
 import H1 from 'components/H1';
 import LoaderButton from 'components/LoaderButton/LoaderButton';
 import messages from './messages';
-import { changeEmail, changePassword, login } from './actions';
+import { changeEmail, changePassword } from './actions';
+import { login } from '../App/actions';
+import { makeSelectEmail, makeSelectPassword } from './selectors';
 import {
-  makeSelectEmail,
-  makeSelectPassword,
-  makeSelectIsLoading,
   makeSelectIsAuthenticated,
   makeSelectIsAuthenticating,
-} from './selectors';
+  makeSelectIsLoading,
+} from '../App/selectors';
 import reducer from './reducer';
-import saga from './saga';
 
 export class LoginPage extends React.PureComponent {
   render() {
@@ -111,10 +109,8 @@ const withConnect = connect(
 );
 
 const withReducer = injectReducer({ key: 'login', reducer });
-const withSaga = injectSaga({ key: 'login', saga });
 
 export default compose(
   withReducer,
-  withSaga,
   withConnect,
 )(LoginPage);

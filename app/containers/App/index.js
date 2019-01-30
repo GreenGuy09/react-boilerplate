@@ -19,17 +19,16 @@ import injectSaga from 'utils/injectSaga';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 
-import {
-  makeSelectIsAuthenticated,
-  makeSelectIsAuthenticating,
-} from '../LoginPage/selectors';
 import GlobalStyle from '../../global-styles';
-import { logout } from '../LoginPage/actions';
 import reducer from './reducer';
 import saga from './saga';
 import Routes from './Routes';
-import { makeSelectUserProfile } from './selectors';
-import { loadUserProfile } from './actions';
+import {
+  makeSelectUserProfile,
+  makeSelectIsAuthenticated,
+  makeSelectIsAuthenticating,
+} from './selectors';
+import { loadUserProfile, logout } from './actions';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);

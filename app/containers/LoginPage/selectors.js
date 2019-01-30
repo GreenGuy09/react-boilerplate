@@ -13,20 +13,4 @@ const makeSelectEmail = () =>
 const makeSelectPassword = () =>
   createSelector(selectLogin, loginState => loginState.get('password'));
 
-const makeSelectIsLoading = () =>
-  createSelector(selectLogin, loginState => loginState.get('isLoading'));
-
-const makeSelectIsAuthenticated = () =>
-  createSelector(selectLogin, loginState => loginState.get('isAuthenticated'));
-
-const makeSelectIsAuthenticating = () =>
-  createSelector(selectLogin, loginState => loginState.get('isAuthenticating'));
-
-export {
-  selectLogin,
-  makeSelectEmail,
-  makeSelectPassword,
-  makeSelectIsLoading,
-  makeSelectIsAuthenticated,
-  makeSelectIsAuthenticating,
-};
+export { selectLogin, makeSelectEmail, makeSelectPassword };

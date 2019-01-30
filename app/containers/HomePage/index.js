@@ -13,11 +13,7 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 
 import injectReducer from 'utils/injectReducer';
-import {
-  makeSelectRepos,
-  makeSelectLoading,
-  makeSelectError,
-} from 'containers/App/selectors';
+import { makeSelectIsLoading, makeSelectError } from 'containers/App/selectors';
 import H2 from 'components/H2';
 import CenteredSection from './CenteredSection';
 import messages from './messages';
@@ -64,7 +60,6 @@ export class HomePage extends React.PureComponent {
 HomePage.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  repos: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   onSubmitForm: PropTypes.func,
   username: PropTypes.string,
   onChangeUsername: PropTypes.func,
@@ -77,9 +72,8 @@ export function mapDispatchToProps(dispatch) {
 }
 
 const mapStateToProps = createStructuredSelector({
-  repos: makeSelectRepos(),
   username: makeSelectUsername(),
-  loading: makeSelectLoading(),
+  loading: makeSelectIsLoading(),
   error: makeSelectError(),
 });
 
