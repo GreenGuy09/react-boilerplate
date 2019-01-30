@@ -14,14 +14,14 @@ import { fromJS } from 'immutable';
 import {
   CHANGE_EMAIL,
   CHANGE_PASSWORD,
-  USER_SIGN_UP,
-  USER_SIGN_UP_SUCCESS,
-  USER_SIGN_UP_ERROR,
+  SIGN_UP_REQUEST,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_ERROR,
   CHANGE_CONFIRM_PASSWORD,
   CHANGE_CONFIRMATION_CODE,
-  USER_CONFIRM_SIGN_UP,
-  USER_CONFIRM_SIGN_UP_SUCCESS,
-  USER_CONFIRM_SIGN_UP_ERROR,
+  CONFIRM_SIGN_UP_REQUEST,
+  CONFIRM_SIGN_UP_SUCCESS,
+  CONFIRM_SIGN_UP_FAILURE,
 } from './constants';
 
 export const initialState = fromJS({
@@ -41,23 +41,33 @@ function signUpReducer(state = initialState, action) {
       return state.set('password', action.password);
     case CHANGE_CONFIRM_PASSWORD:
       return state.set('confirmPassword', action.confirmPassword);
-    case USER_SIGN_UP:
+    case SIGN_UP_REQUEST:
       return state.set('isLoading', true);
-    case USER_SIGN_UP_SUCCESS:
+    case SIGN_UP_SUCCESS:
       return state.set('isLoading', false).set('newUser', action.newUser);
-    case USER_SIGN_UP_ERROR:
+    case SIGN_UP_ERROR:
       return state
         .set('isLoading', false)
         .set('newUser', null)
-        .set('error', action.message);
+        .set('error', action.message)
+        .set('email', '')
+        .set('password', '')
+        .set('confirmPassword', '');
     case CHANGE_CONFIRMATION_CODE:
       return state.set('confirmationCode', action.confirmationCode);
-    case USER_CONFIRM_SIGN_UP:
-      return state.set('isLoading', false).set('newUser', null);
-    case USER_CONFIRM_SIGN_UP_SUCCESS:
-      return state.set('isLoading', false);
-    case USER_CONFIRM_SIGN_UP_ERROR:
-      return state.set('isLoading', false);
+    case CONFIRM_SIGN_UP_REQUEST:
+      return state.set('isLoading', true).set('newUser', null);
+    case CONFIRM_SIGN_UP_SUCCESS:
+      return state
+        .set('isLoading', false)
+        .set('email', '')
+        .set('password', '')
+        .set('confirmPassword', '');
+    case CONFIRM_SIGN_UP_FAILURE:
+      return state
+        .set('isLoading', false)
+        .set('email', null)
+        .set('password', null);
     default:
       return state;
   }

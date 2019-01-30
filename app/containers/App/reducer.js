@@ -29,7 +29,7 @@ const initialState = fromJS({
   isAuthenticated: false,
   isAuthenticating: true,
   isLoading: false,
-  error: false,
+  error: null,
   userProfile: null,
 });
 
@@ -43,7 +43,11 @@ function appReducer(state = initialState, action) {
         .set('isAuthenticated', true)
         .set('isAuthenticating', false);
     case LOGIN_FAILURE:
-      return state.set('isLoading', false).set('isAuthenticated', false);
+      return state
+        .set('isLoading', false)
+        .set('isAuthenticated', false)
+        .set('isAuthenticating', false)
+        .set('error', action.error);
     case LOGOUT_REQUEST:
       return state.set('isLoading', true);
     case LOGOUT_SUCCESS:

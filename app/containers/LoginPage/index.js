@@ -24,6 +24,7 @@ import {
   makeSelectIsAuthenticated,
   makeSelectIsAuthenticating,
   makeSelectIsLoading,
+  makeSelectError,
 } from '../App/selectors';
 import reducer from './reducer';
 
@@ -74,6 +75,7 @@ export class LoginPage extends React.PureComponent {
 }
 
 LoginPage.propTypes = {
+  error: PropTypes.object,
   isLoading: PropTypes.bool,
   email: PropTypes.string,
   password: PropTypes.string,
@@ -96,6 +98,7 @@ export function mapDispatchToProps(dispatch) {
 }
 
 const mapStateToProps = createStructuredSelector({
+  error: makeSelectError(),
   email: makeSelectEmail(),
   password: makeSelectPassword(),
   isLoading: makeSelectIsLoading(),

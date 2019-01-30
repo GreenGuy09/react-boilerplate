@@ -7,6 +7,7 @@ import {
   loginFailure,
   logoutSuccess,
   logoutFailure,
+  loadUserProfileFailure,
 } from './actions';
 import {
   LOAD_USER_PROFILE_REQUEST,
@@ -21,10 +22,7 @@ export function* login() {
 
   try {
     yield Auth.signIn(email, password);
-    const userSession = yield Auth.currentSession();
-    const idToken = yield userSession.idToken.payload;
-    yield put(userProfileLoaded(idToken));
-    yield put(loginSuccess());
+    yield loadUserProfile();
     yield put(push('/'));
   } catch (err) {
     yield put(loginFailure(err));
@@ -61,7 +59,7 @@ export function* loadUserProfile() {
     yield put(userProfileLoaded(idToken));
     yield put(loginSuccess());
   } catch (err) {
-    console.error(err);
+    yield put(loadUserProfileFailure());
   }
 }
 

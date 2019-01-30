@@ -1,7 +1,7 @@
 import { put, select, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router/immutable';
 import { Auth } from 'aws-amplify';
-import { USER_SIGN_UP, USER_CONFIRM_SIGN_UP } from './constants';
+import { SIGN_UP_REQUEST, CONFIRM_SIGN_UP_REQUEST } from './constants';
 
 import {
   makeSelectEmail,
@@ -46,6 +46,6 @@ export function* confirmSignUpCognito() {
 }
 
 export default function* signUp() {
-  yield takeLatest(USER_SIGN_UP, signUpCognito);
-  yield takeLatest(USER_CONFIRM_SIGN_UP, confirmSignUpCognito);
+  yield takeLatest(SIGN_UP_REQUEST, signUpCognito);
+  yield takeLatest(CONFIRM_SIGN_UP_REQUEST, confirmSignUpCognito);
 }

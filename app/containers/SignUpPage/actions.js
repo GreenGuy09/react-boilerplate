@@ -19,12 +19,12 @@ import {
   CHANGE_EMAIL,
   CHANGE_PASSWORD,
   CHANGE_CONFIRM_PASSWORD,
-  USER_SIGN_UP,
-  USER_SIGN_UP_SUCCESS,
-  USER_SIGN_UP_ERROR,
+  SIGN_UP_REQUEST,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_ERROR,
   CHANGE_CONFIRMATION_CODE,
-  USER_CONFIRM_SIGN_UP,
-  USER_CONFIRM_SIGN_UP_SUCCESS,
+  CONFIRM_SIGN_UP_REQUEST,
+  CONFIRM_SIGN_UP_SUCCESS,
 } from './constants';
 
 /**
@@ -71,20 +71,20 @@ export function changeConfirmPassword(confirmPassword) {
 
 export function signUp() {
   return {
-    type: USER_SIGN_UP,
+    type: SIGN_UP_REQUEST,
   };
 }
 
 export function signUpSuccess(newUser) {
   return {
-    type: USER_SIGN_UP_SUCCESS,
+    type: SIGN_UP_SUCCESS,
     newUser,
   };
 }
 
 export function signUpError(message) {
   return {
-    type: USER_SIGN_UP_ERROR,
+    type: SIGN_UP_ERROR,
     message,
   };
 }
@@ -98,19 +98,19 @@ export function changeConfirmationCode(confirmationCode) {
 
 export function confirmSignUp() {
   return {
-    type: USER_CONFIRM_SIGN_UP,
+    type: CONFIRM_SIGN_UP_REQUEST,
   };
 }
 
 export function confirmSignUpSuccess() {
   return {
-    type: USER_CONFIRM_SIGN_UP_SUCCESS,
+    type: CONFIRM_SIGN_UP_SUCCESS,
   };
 }
 
 export function confirmSignUpError(message) {
   return {
-    type: USER_CONFIRM_SIGN_UP_SUCCESS,
+    type: CONFIRM_SIGN_UP_SUCCESS,
     message,
   };
 }

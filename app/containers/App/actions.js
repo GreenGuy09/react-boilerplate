@@ -24,6 +24,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  LOAD_USER_PROFILE_FAILURE,
 } from './constants';
 
 export function loadUserProfile() {
@@ -36,6 +37,12 @@ export function userProfileLoaded(userProfile) {
   return {
     type: LOAD_USER_PROFILE_SUCCESS,
     userProfile,
+  };
+}
+
+export function loadUserProfileFailure() {
+  return {
+    type: LOAD_USER_PROFILE_FAILURE,
   };
 }
 
