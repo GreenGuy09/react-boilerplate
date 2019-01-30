@@ -16,19 +16,15 @@ import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import Header from 'components/Header';
+import NavigationBar from 'containers/NavigationBar';
 import Footer from 'components/Footer';
 
 import GlobalStyle from '../../global-styles';
 import reducer from './reducer';
 import saga from './saga';
 import Routes from './Routes';
-import {
-  makeSelectUserProfile,
-  makeSelectIsAuthenticated,
-  makeSelectIsAuthenticating,
-} from './selectors';
-import { loadUserProfile, logout } from './actions';
+import { makeSelectIsAuthenticated } from './selectors';
+import { loadUserProfile } from './actions';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -51,16 +47,14 @@ class App extends React.PureComponent {
   }
 
   render() {
-    const { isAuthenticated, onLogout, userProfile } = this.props;
+    const { isAuthenticated } = this.props;
     const childProps = {
       isAuthenticated,
-      onLogout,
-      userProfile,
     };
 
     return (
       <AppWrapper>
-        <Header {...childProps} />
+        <NavigationBar />
         <Routes childProps={childProps} />
         <Footer />
         <GlobalStyle />
@@ -71,24 +65,17 @@ class App extends React.PureComponent {
 
 App.propTypes = {
   isAuthenticated: PropTypes.bool,
-  isAuthenticating: PropTypes.bool,
-  userProfile: PropTypes.object,
-  onLogout: PropTypes.func,
-  onUserHasAuthenticated: PropTypes.func,
   onLoadUserProfile: PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onLogout: () => dispatch(logout()),
     onLoadUserProfile: () => dispatch(loadUserProfile()),
   };
 }
 
 const mapStateToProps = createStructuredSelector({
   isAuthenticated: makeSelectIsAuthenticated(),
-  isAuthenticating: makeSelectIsAuthenticating(),
-  userProfile: makeSelectUserProfile(),
 });
 
 const withConnect = connect(
