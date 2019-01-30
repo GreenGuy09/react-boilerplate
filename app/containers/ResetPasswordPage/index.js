@@ -52,6 +52,9 @@ export class ResetPasswordPage extends React.PureComponent {
             value={this.props.code}
             onChange={this.props.onChange}
           />
+          <Form.Control.Feedback type="invalid">
+            Please enter a valid email.
+          </Form.Control.Feedback>
           <p>
             Please check your email ({this.props.email}) for the confirmation
             code.
@@ -65,6 +68,9 @@ export class ResetPasswordPage extends React.PureComponent {
             value={this.props.password}
             onChange={this.props.onChange}
           />
+          <Form.Control.Feedback type="invalid">
+            Please enter a valid password.
+          </Form.Control.Feedback>
         </Form.Group>
         <Form.Group controlId="confirmPassword">
           <Form.Label>Confirm Password</Form.Label>
@@ -73,6 +79,9 @@ export class ResetPasswordPage extends React.PureComponent {
             onChange={this.props.onChange}
             value={this.props.confirmPassword}
           />
+          <Form.Control.Feedback type="invalid">
+            Please enter a valid password.
+          </Form.Control.Feedback>
         </Form.Group>
         <Button block type="submit">
           Confirm

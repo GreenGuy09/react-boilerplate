@@ -13,4 +13,12 @@ const makeSelectEmail = () =>
 const makeSelectPassword = () =>
   createSelector(selectLogin, loginState => loginState.get('password'));
 
-export { selectLogin, makeSelectEmail, makeSelectPassword };
+const makeSelectValidated = () =>
+  createSelector(selectLogin, loginState => loginState.get('validated'));
+
+export {
+  selectLogin,
+  makeSelectEmail,
+  makeSelectPassword,
+  makeSelectValidated,
+};

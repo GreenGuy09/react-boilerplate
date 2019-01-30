@@ -26,3 +26,5 @@ export const CONFIRM_SIGN_UP_SUCCESS =
   'caregiver/SignUpPage/CONFIRM_SIGN_UP_SUCCESS';
 export const CONFIRM_SIGN_UP_FAILURE =
   'caregiver/SignUpPage/CONFIRM_SIGN_UP_FAILURE';
+
+export const SIGN_UP_VALIDATED = 'caregivers/SignUpPage/SIGN_UP_VALIDATED';

@@ -16,9 +16,13 @@ import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
 import H1 from 'components/H1';
 import messages from './messages';
-import { changeEmail, changePassword } from './actions';
+import { changeEmail, changePassword, loginValidated } from './actions';
 import { login } from '../App/actions';
-import { makeSelectEmail, makeSelectPassword } from './selectors';
+import {
+  makeSelectEmail,
+  makeSelectPassword,
+  makeSelectValidated,
+} from './selectors';
 import {
   makeSelectIsAuthenticated,
   makeSelectIsAuthenticating,
@@ -38,26 +42,38 @@ export class LoginPage extends React.PureComponent {
           <FormattedMessage {...messages.header} />
         </H1>
         <div>
-          <Form noValidate onSubmit={this.props.onSubmit}>
+          <Form
+            noValidate
+            validated={this.props.validated}
+            onSubmit={this.props.onSubmit}
+          >
             <Form.Group controlId="email">
               <Form.Label>Email</Form.Label>
               <Form.Control
+                required
                 autoFocus
                 type="email"
                 value={this.props.email}
                 onChange={this.props.onChangeEmail}
               />
+              <Form.Control.Feedback type="invalid">
+                Please enter a valid email.
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group controlId="password">
               <Form.Label>Password</Form.Label>
               <Form.Control
+                required
                 type="password"
                 value={this.props.password}
                 onChange={this.props.onChangePassword}
               />
+              <Form.Control.Feedback type="invalid">
+                Please enter a valid password.
+              </Form.Control.Feedback>
             </Form.Group>
             <Link to="/login/reset">Forgot password?</Link>
-            <Button block disabled={false} type="submit">
+            <Button block type="submit">
               Login
             </Button>
           </Form>
@@ -72,6 +88,7 @@ LoginPage.propTypes = {
   isLoading: PropTypes.bool,
   email: PropTypes.string,
   password: PropTypes.string,
+  validated: PropTypes.bool,
   onSubmit: PropTypes.func,
   onChangeEmail: PropTypes.func,
   onChangePassword: PropTypes.func,
@@ -85,7 +102,14 @@ export function mapDispatchToProps(dispatch) {
     onChangePassword: evt => dispatch(changePassword(evt.target.value)),
     onSubmit: evt => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(login());
+      const form = evt.currentTarget;
+      if (form.checkValidity() === false) {
+        evt.preventDefault();
+        evt.stopPropagation();
+      } else {
+        dispatch(login());
+      }
+      dispatch(loginValidated());
     },
   };
 }
@@ -94,6 +118,7 @@ const mapStateToProps = createStructuredSelector({
   error: makeSelectError(),
   email: makeSelectEmail(),
   password: makeSelectPassword(),
+  validated: makeSelectValidated(),
   isLoading: makeSelectIsLoading(),
   isAuthenticated: makeSelectIsAuthenticated(),
   isAuthenticating: makeSelectIsAuthenticating(),

@@ -22,6 +22,7 @@ import {
   CONFIRM_SIGN_UP_REQUEST,
   CONFIRM_SIGN_UP_SUCCESS,
   CONFIRM_SIGN_UP_FAILURE,
+  SIGN_UP_VALIDATED,
 } from './constants';
 
 export const initialState = fromJS({
@@ -29,6 +30,7 @@ export const initialState = fromJS({
   email: '',
   password: '',
   confirmPassword: '',
+  validatedSignUp: false,
   newUser: null,
   confirmationCode: '',
 });
@@ -68,6 +70,8 @@ function signUpReducer(state = initialState, action) {
         .set('isLoading', false)
         .set('email', null)
         .set('password', null);
+    case SIGN_UP_VALIDATED:
+      return state.set('validatedSignUp', true);
     default:
       return state;
   }

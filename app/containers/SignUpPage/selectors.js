@@ -29,11 +29,17 @@ const makeSelectConfirmationCode = () =>
     signUpState.get('confirmationCode'),
   );
 
+const makeSelectValidatedSignUp = () =>
+  createSelector(selectSignUp, signUpState =>
+    signUpState.get('validatedSignUp'),
+  );
+
 export {
   selectSignUp,
   makeSelectEmail,
   makeSelectPassword,
   makeSelectConfirmPassword,
+  makeSelectValidatedSignUp,
   makeSelectIsLoading,
   makeSelectNewUser,
   makeSelectConfirmationCode,

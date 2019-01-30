@@ -25,6 +25,7 @@ import {
   CHANGE_CONFIRMATION_CODE,
   CONFIRM_SIGN_UP_REQUEST,
   CONFIRM_SIGN_UP_SUCCESS,
+  SIGN_UP_VALIDATED,
 } from './constants';
 
 /**
@@ -112,5 +113,11 @@ export function confirmSignUpError(message) {
   return {
     type: CONFIRM_SIGN_UP_SUCCESS,
     message,
+  };
+}
+
+export function signUpValidated() {
+  return {
+    type: SIGN_UP_VALIDATED,
   };
 }

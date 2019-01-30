@@ -15,7 +15,7 @@
  *    }
  */
 
-import { CHANGE_EMAIL, CHANGE_PASSWORD } from './constants';
+import { CHANGE_EMAIL, CHANGE_PASSWORD, LOGIN_VALIDATED } from './constants';
 
 /**
  * Changes the input field of the form
@@ -42,5 +42,11 @@ export function changePassword(password) {
   return {
     type: CHANGE_PASSWORD,
     password,
+  };
+}
+
+export function loginValidated() {
+  return {
+    type: LOGIN_VALIDATED,
   };
 }

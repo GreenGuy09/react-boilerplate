@@ -11,13 +11,14 @@
  */
 import { fromJS } from 'immutable';
 
-import { CHANGE_EMAIL, CHANGE_PASSWORD } from './constants';
+import { CHANGE_EMAIL, CHANGE_PASSWORD, LOGIN_VALIDATED } from './constants';
 import { LOGIN_SUCCESS } from '../App/constants';
 
 // The initial state of the App
 export const initialState = fromJS({
   email: '',
   password: '',
+  validated: false,
 });
 
 function loginReducer(state = initialState, action) {
@@ -28,6 +29,8 @@ function loginReducer(state = initialState, action) {
       return state.set('password', action.password);
     case LOGIN_SUCCESS:
       return initialState;
+    case LOGIN_VALIDATED:
+      return state.set('validated', true);
     default:
       return state;
   }

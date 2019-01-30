@@ -7,7 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
-import { HelpBlock, Form, Button } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -23,6 +23,7 @@ import {
   signUp,
   changeConfirmationCode,
   confirmSignUp,
+  signUpValidated,
 } from './actions';
 import {
   makeSelectEmail,
@@ -31,6 +32,7 @@ import {
   makeSelectIsLoading,
   makeSelectNewUser,
   makeSelectConfirmationCode,
+  makeSelectValidatedSignUp,
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -38,18 +40,22 @@ import saga from './saga';
 export class SignUpPage extends React.PureComponent {
   renderConfirmationForm() {
     return (
-      <Form onSubmit={this.props.onConfirmationSubmit}>
+      <Form noValidate onSubmit={this.props.onConfirmationSubmit}>
         <Form.Group controlId="confirmationCode">
           <Form.Label>Confirmation Code</Form.Label>
           <Form.Control
+            required
             autoFocus
             type="tel"
             value={this.props.confirmationCode}
             onChange={this.props.onChangeConfirmationCode}
           />
-          <HelpBlock>Please check your email for the code.</HelpBlock>
+          <Form.Control.Feedback type="invalid">
+            Please enter a valid confirmation code.
+          </Form.Control.Feedback>
+          <p>Please check your email for the code.</p>
         </Form.Group>
-        <Button blocks type="submit">
+        <Button block type="submit">
           Verify
         </Button>
       </Form>
@@ -58,32 +64,48 @@ export class SignUpPage extends React.PureComponent {
 
   renderForm() {
     return (
-      <Form onSubmit={this.props.onSubmit}>
+      <Form
+        noValidate
+        validated={this.props.validatedSignUp}
+        onSubmit={this.props.onSubmit}
+      >
         <Form.Group controlId="email">
           <Form.Label>Email</Form.Label>
           <Form.Control
+            required
             type="email"
             value={this.props.email}
             onChange={this.props.onChangeEmail}
           />
+          <Form.Control.Feedback type="invalid">
+            Please enter a valid email.
+          </Form.Control.Feedback>
         </Form.Group>
         <Form.Group controlId="password">
           <Form.Label>Password</Form.Label>
           <Form.Control
+            required
             type="password"
             value={this.props.password}
             onChange={this.props.onChangePassword}
           />
+          <Form.Control.Feedback type="invalid">
+            Please enter a valid password.
+          </Form.Control.Feedback>
         </Form.Group>
         <Form.Group controlId="confirmPassword">
           <Form.Label>Confirm Password</Form.Label>
           <Form.Control
+            required
             type="password"
             value={this.props.confirmPassword}
             onChange={this.props.onChangeConfirmPassword}
           />
+          <Form.Control.Feedback type="invalid">
+            Please enter a valid password.
+          </Form.Control.Feedback>
         </Form.Group>
-        <Button block disabled={false} type="submit">
+        <Button block type="submit">
           Sign Up
         </Button>
       </Form>
@@ -115,6 +137,7 @@ SignUpPage.propTypes = {
   email: PropTypes.string,
   password: PropTypes.string,
   confirmPassword: PropTypes.string,
+  validatedSignUp: PropTypes.bool,
   confirmationCode: PropTypes.string,
   onSubmit: PropTypes.func,
   onConfirmationSubmit: PropTypes.func,
@@ -132,7 +155,14 @@ export function mapDispatchToProps(dispatch) {
       dispatch(changeConfirmPassword(evt.target.value)),
     onSubmit: evt => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(signUp());
+      const form = evt.currentTarget;
+      if (form.checkValidity() === false) {
+        evt.preventDefault();
+        evt.stopPropagation();
+      } else {
+        dispatch(signUp());
+      }
+      dispatch(signUpValidated());
     },
     onChangeConfirmationCode: evt =>
       dispatch(changeConfirmationCode(evt.target.value)),
@@ -147,6 +177,7 @@ const mapStateToProps = createStructuredSelector({
   email: makeSelectEmail(),
   password: makeSelectPassword(),
   confirmPassword: makeSelectConfirmPassword(),
+  validatedSignUp: makeSelectValidatedSignUp(),
   confirmationCode: makeSelectConfirmationCode(),
   newUser: makeSelectNewUser(),
   isLoading: makeSelectIsLoading(),

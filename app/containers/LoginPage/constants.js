@@ -11,3 +11,4 @@
 
 export const CHANGE_EMAIL = 'caregivers/Login/CHANGE_EMAIL';
 export const CHANGE_PASSWORD = 'caregivers/Login/CHANGE_PASSWORD';
+export const LOGIN_VALIDATED = 'caregivers/Login/LOGIN_VALIDATED';
