@@ -5,24 +5,15 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { createStructuredSelector } from 'reselect';
 
-import injectReducer from 'utils/injectReducer';
-import { makeSelectIsLoading, makeSelectError } from 'containers/App/selectors';
 import H2 from 'components/H2';
 import CenteredSection from './CenteredSection';
 import messages from './messages';
-import { changeUsername } from './actions';
-import { makeSelectUsername } from './selectors';
-import reducer from './reducer';
 
 /* eslint-disable react/prefer-stateless-function */
-export class HomePage extends React.PureComponent {
+export default class HomePage extends React.PureComponent {
   /**
    * when initial state username is not null, submit the form to load repos
    */
@@ -56,35 +47,3 @@ export class HomePage extends React.PureComponent {
     );
   }
 }
-
-HomePage.propTypes = {
-  loading: PropTypes.bool,
-  error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  onSubmitForm: PropTypes.func,
-  username: PropTypes.string,
-  onChangeUsername: PropTypes.func,
-};
-
-export function mapDispatchToProps(dispatch) {
-  return {
-    onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
-  };
-}
-
-const mapStateToProps = createStructuredSelector({
-  username: makeSelectUsername(),
-  loading: makeSelectIsLoading(),
-  error: makeSelectError(),
-});
-
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
-
-const withReducer = injectReducer({ key: 'home', reducer });
-
-export default compose(
-  withReducer,
-  withConnect,
-)(HomePage);
