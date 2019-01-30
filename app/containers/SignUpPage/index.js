@@ -7,12 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
-import {
-  HelpBlock,
-  FormGroup,
-  FormControl,
-  ControlLabel,
-} from 'react-bootstrap';
+import { HelpBlock, Form, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -20,7 +15,6 @@ import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 import H1 from 'components/H1';
-import LoaderButton from 'components/LoaderButton/LoaderButton';
 import messages from './messages';
 import {
   changeEmail,
@@ -44,66 +38,55 @@ import saga from './saga';
 export class SignUpPage extends React.PureComponent {
   renderConfirmationForm() {
     return (
-      <form onSubmit={this.props.onConfirmationSubmit}>
-        <FormGroup controlId="confirmationCode" bsSize="large">
-          <ControlLabel>Confirmation Code</ControlLabel>
-          <FormControl
+      <Form onSubmit={this.props.onConfirmationSubmit}>
+        <Form.Group controlId="confirmationCode">
+          <Form.Label>Confirmation Code</Form.Label>
+          <Form.Control
             autoFocus
             type="tel"
             value={this.props.confirmationCode}
             onChange={this.props.onChangeConfirmationCode}
           />
           <HelpBlock>Please check your email for the code.</HelpBlock>
-        </FormGroup>
-        <LoaderButton
-          block
-          bsSize="large"
-          type="submit"
-          isLoading={this.props.isLoading}
-          text="Verify"
-          loadingText="Verifying…"
-        />
-      </form>
+        </Form.Group>
+        <Button blocks type="submit">
+          Verify
+        </Button>
+      </Form>
     );
   }
 
   renderForm() {
     return (
-      <form onSubmit={this.props.onSubmit}>
-        <FormGroup controlId="email" bsSize="large">
-          <ControlLabel>Email</ControlLabel>
-          <FormControl
+      <Form onSubmit={this.props.onSubmit}>
+        <Form.Group controlId="email">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
             type="email"
             value={this.props.email}
             onChange={this.props.onChangeEmail}
           />
-        </FormGroup>
-        <FormGroup controlId="password" bsSize="large">
-          <ControlLabel>Password</ControlLabel>
-          <FormControl
+        </Form.Group>
+        <Form.Group controlId="password">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
             type="password"
             value={this.props.password}
             onChange={this.props.onChangePassword}
           />
-        </FormGroup>
-        <FormGroup controlId="confirmPassword" bsSize="large">
-          <ControlLabel>Confirm Password</ControlLabel>
-          <FormControl
+        </Form.Group>
+        <Form.Group controlId="confirmPassword">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
             type="password"
             value={this.props.confirmPassword}
             onChange={this.props.onChangeConfirmPassword}
           />
-        </FormGroup>
-        <LoaderButton
-          block
-          bsSize="large"
-          disabled={false}
-          type="submit"
-          isLoading={this.props.isLoading}
-          text="Sign Up"
-          loadingText="Signing in…"
-        />
-      </form>
+        </Form.Group>
+        <Button block disabled={false} type="submit">
+          Sign Up
+        </Button>
+      </Form>
     );
   }
 

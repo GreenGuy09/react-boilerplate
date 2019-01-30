@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter, Link } from 'react-router-dom';
-import { Nav, Navbar, NavDropdown, NavItem, MenuItem } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
+import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -16,34 +16,30 @@ export class NavigationBar extends React.PureComponent {
   render() {
     return (
       <div>
-        <Navbar fluid collapseOnSelect>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <Link to="/">Caregivers</Link>
-            </Navbar.Brand>
-            <Navbar.Toggle />
-          </Navbar.Header>
-          <Navbar.Collapse>
-            <Nav pullRight>
+        <Navbar bg="light" expand="lg">
+          <LinkContainer to="/">
+            <Navbar.Brand>Caregivers</Navbar.Brand>
+          </LinkContainer>
+          <Navbar.Toggle />
+          <Navbar.Collapse className="justify-content-end">
+            <Nav>
               {this.props.isAuthenticated ? (
-                <Fragment>
-                  <NavDropdown
-                    title={this.props.userProfile.email}
-                    id="user-nav-dropdown"
-                  >
-                    <LinkContainer to="/settings">
-                      <MenuItem>Settings</MenuItem>
-                    </LinkContainer>
-                    <MenuItem onClick={this.props.onLogout}>Logout</MenuItem>
-                  </NavDropdown>
-                </Fragment>
+                <NavDropdown title={this.props.userProfile.email}>
+                  <LinkContainer to="/settings">
+                    <NavDropdown.Item>Settings</NavDropdown.Item>
+                  </LinkContainer>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item onClick={this.props.onLogout}>
+                    Logout
+                  </NavDropdown.Item>
+                </NavDropdown>
               ) : (
                 <Fragment>
                   <LinkContainer to="/signup">
-                    <NavItem>Signup</NavItem>
+                    <Nav.Link>SignUp</Nav.Link>
                   </LinkContainer>
                   <LinkContainer to="/login">
-                    <NavItem>Login</NavItem>
+                    <Nav.Link>Login</Nav.Link>
                   </LinkContainer>
                 </Fragment>
               )}

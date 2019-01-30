@@ -8,14 +8,13 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
-import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 
 import injectReducer from 'utils/injectReducer';
 import H1 from 'components/H1';
-import LoaderButton from 'components/LoaderButton/LoaderButton';
 import messages from './messages';
 import { changeEmail, changePassword } from './actions';
 import { login } from '../App/actions';
@@ -39,35 +38,29 @@ export class LoginPage extends React.PureComponent {
           <FormattedMessage {...messages.header} />
         </H1>
         <div>
-          <form onSubmit={this.props.onSubmit}>
-            <FormGroup controlId="email" bsSize="large">
-              <ControlLabel>Email</ControlLabel>
-              <FormControl
+          <Form noValidate onSubmit={this.props.onSubmit}>
+            <Form.Group controlId="email">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
                 autoFocus
                 type="email"
                 value={this.props.email}
                 onChange={this.props.onChangeEmail}
               />
-            </FormGroup>
-            <FormGroup controlId="password" bsSize="large">
-              <ControlLabel>Password</ControlLabel>
-              <FormControl
+            </Form.Group>
+            <Form.Group controlId="password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
                 type="password"
                 value={this.props.password}
                 onChange={this.props.onChangePassword}
               />
-            </FormGroup>
+            </Form.Group>
             <Link to="/login/reset">Forgot password?</Link>
-            <LoaderButton
-              block
-              bsSize="large"
-              disabled={false}
-              type="submit"
-              isLoading={this.props.isLoading}
-              text="Login"
-              loadingText="Logging in…"
-            />
-          </form>
+            <Button block disabled={false} type="submit">
+              Login
+            </Button>
+          </Form>
         </div>
       </div>
     );

@@ -1,12 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  HelpBlock,
-  FormGroup,
-  Glyphicon,
-  FormControl,
-  ControlLabel,
-} from 'react-bootstrap';
+import { Form, Glyphicon, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -14,7 +8,6 @@ import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import LoaderButton from 'components/LoaderButton/LoaderButton';
 import { sendCode, changeField, confirmCode } from './actions';
 import {
   makeSelectCode,
@@ -31,72 +24,60 @@ import saga from './saga';
 export class ResetPasswordPage extends React.PureComponent {
   renderRequestCodeForm() {
     return (
-      <form onSubmit={this.props.onSendCodeSubmit}>
-        <FormGroup bsSize="large" controlId="email">
-          <ControlLabel>Email</ControlLabel>
-          <FormControl
+      <Form noValidate onSubmit={this.props.onSendCodeSubmit}>
+        <Form.Group controlId="email">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
             autoFocus
             type="email"
             value={this.props.email}
             onChange={this.props.onChange}
           />
-        </FormGroup>
-        <LoaderButton
-          block
-          type="submit"
-          bsSize="large"
-          loadingText="Sending…"
-          text="Send Confirmation"
-          isLoading={this.props.isSendingCode}
-          // disabled={!this.validateCodeForm()}
-        />
-      </form>
+        </Form.Group>
+        <Button block type="submit">
+          Send Confirmation
+        </Button>
+      </Form>
     );
   }
 
   renderConfirmationForm() {
     return (
-      <form onSubmit={this.props.onConfirmSubmit}>
-        <FormGroup bsSize="large" controlId="code">
-          <ControlLabel>Confirmation Code</ControlLabel>
-          <FormControl
+      <Form noValidate onSubmit={this.props.onConfirmSubmit}>
+        <Form.Group controlId="code">
+          <Form.Label>Confirmation Code</Form.Label>
+          <Form.Control
             autoFocus
             type="tel"
             value={this.props.code}
             onChange={this.props.onChange}
           />
-          <HelpBlock>
+          <p>
             Please check your email ({this.props.email}) for the confirmation
             code.
-          </HelpBlock>
-        </FormGroup>
+          </p>
+        </Form.Group>
         <hr />
-        <FormGroup bsSize="large" controlId="password">
-          <ControlLabel>New Password</ControlLabel>
-          <FormControl
+        <Form.Group controlId="password">
+          <Form.Label>New Password</Form.Label>
+          <Form.Control
             type="password"
             value={this.props.password}
             onChange={this.props.onChange}
           />
-        </FormGroup>
-        <FormGroup bsSize="large" controlId="confirmPassword">
-          <ControlLabel>Confirm Password</ControlLabel>
-          <FormControl
+        </Form.Group>
+        <Form.Group controlId="confirmPassword">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
             type="password"
             onChange={this.props.onChange}
             value={this.props.confirmPassword}
           />
-        </FormGroup>
-        <LoaderButton
-          block
-          type="submit"
-          bsSize="large"
-          text="Confirm"
-          loadingText="Confirm…"
-          isLoading={this.props.isConfirming}
-          // disabled={!this.validateResetForm()}
-        />
-      </form>
+        </Form.Group>
+        <Button block type="submit">
+          Confirm
+        </Button>
+      </Form>
     );
   }
 
@@ -132,8 +113,6 @@ ResetPasswordPage.propTypes = {
   codeSent: PropTypes.bool,
   confirmed: PropTypes.bool,
   confirmPassword: PropTypes.string,
-  isConfirming: PropTypes.bool,
-  isSendingCode: PropTypes.bool,
   onSendCodeSubmit: PropTypes.func,
   onChange: PropTypes.func,
   onConfirmSubmit: PropTypes.func,

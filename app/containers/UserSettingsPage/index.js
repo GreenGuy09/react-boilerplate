@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 
 import H2 from 'components/H2';
-import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import messages from './messages';
 import { makeSelectUserProfile } from '../App/selectors';
 
@@ -27,14 +27,14 @@ export class UserSettingsPage extends React.PureComponent {
             <FormattedMessage {...messages.userSettingsHeader} />
           </H2>
           <section>
-            <FormGroup controlId="email" bsSize="large">
-              <ControlLabel>Email</ControlLabel>
-              <FormControl
+            <Form.Group controlId="email">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
                 type="email"
                 value={this.props.userProfile.email}
                 readOnly
               />
-            </FormGroup>
+            </Form.Group>
           </section>
         </div>
       </article>
