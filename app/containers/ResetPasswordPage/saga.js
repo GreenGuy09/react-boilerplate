@@ -6,7 +6,7 @@ import {
   makeSelectPassword,
   makeSelectCode,
 } from './selectors';
-import { SEND_CODE, CONFIRM_CODE } from './constants';
+import { SEND_CODE_REQUEST, CONFIRM_CODE_REQUEST } from './constants';
 import {
   codeSentSuccess,
   codeSentError,
@@ -43,6 +43,6 @@ export function* confirmCode() {
 }
 
 export default function* reset() {
-  yield takeLatest(SEND_CODE, sendCode);
-  yield takeLatest(CONFIRM_CODE, confirmCode);
+  yield takeLatest(SEND_CODE_REQUEST, sendCode);
+  yield takeLatest(CONFIRM_CODE_REQUEST, confirmCode);
 }

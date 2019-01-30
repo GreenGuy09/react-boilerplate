@@ -2,12 +2,12 @@ import { fromJS } from 'immutable';
 
 import {
   CHANGE_FIELD,
-  CONFIRM_CODE,
-  SEND_CODE,
-  PASSWORD_RESET_SUCCESS,
-  PASSWORD_RESET_ERROR,
-  CODE_SENT_SUCCESS,
-  CODE_SENT_ERROR,
+  CONFIRM_CODE_REQUEST,
+  SEND_CODE_REQUEST,
+  CONFIRM_CODE_SUCCESS,
+  CONFIRM_CODE_FAILURE,
+  SEND_CODE_SUCCESS,
+  SEND_CODE_FAILURE,
 } from './constants';
 
 export const initialState = fromJS({
@@ -24,18 +24,23 @@ function resetPasswordReducer(state = initialState, action) {
   switch (action.type) {
     case CHANGE_FIELD:
       return state.set(action.field.id, action.field.value);
-    case SEND_CODE:
+    case SEND_CODE_REQUEST:
       return state.set('isSendingCode', true);
-    case CODE_SENT_SUCCESS:
+    case SEND_CODE_SUCCESS:
       return state.set('codeSent', true);
-    case CODE_SENT_ERROR:
+    case SEND_CODE_FAILURE:
       return state.set('isSendingCode', false);
-    case CONFIRM_CODE:
+    case CONFIRM_CODE_REQUEST:
       return state.set('isConfirming', true);
-    case PASSWORD_RESET_SUCCESS:
-      return state.set('confirmed', true);
-    case PASSWORD_RESET_ERROR:
-      return state.set('isConfirming', false);
+    case CONFIRM_CODE_SUCCESS:
+      return initialState;
+    case CONFIRM_CODE_FAILURE:
+      return state
+        .set('isConfirming', false)
+        .set('code', null)
+        .set('email', null)
+        .set('password', null)
+        .set('confirmPassword', null);
     default:
       return state;
   }

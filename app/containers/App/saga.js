@@ -25,6 +25,7 @@ export function* login() {
     yield loadUserProfile();
     yield put(push('/'));
   } catch (err) {
+    alert(err.message);
     yield put(loginFailure(err));
   }
 }

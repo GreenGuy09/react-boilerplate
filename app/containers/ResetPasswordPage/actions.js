@@ -1,11 +1,11 @@
 import {
   CHANGE_FIELD,
-  CONFIRM_CODE,
-  SEND_CODE,
-  PASSWORD_RESET_SUCCESS,
-  PASSWORD_RESET_ERROR,
-  CODE_SENT_SUCCESS,
-  CODE_SENT_ERROR,
+  CONFIRM_CODE_REQUEST,
+  SEND_CODE_REQUEST,
+  CONFIRM_CODE_SUCCESS,
+  CONFIRM_CODE_FAILURE,
+  SEND_CODE_SUCCESS,
+  SEND_CODE_FAILURE,
 } from './constants';
 
 export function changeField(id, value) {
@@ -20,38 +20,38 @@ export function changeField(id, value) {
 
 export function sendCode() {
   return {
-    type: SEND_CODE,
+    type: SEND_CODE_REQUEST,
   };
 }
 
 export function codeSentSuccess() {
   return {
-    type: CODE_SENT_SUCCESS,
+    type: SEND_CODE_SUCCESS,
   };
 }
 
 export function codeSentError(message) {
   return {
-    type: CODE_SENT_ERROR,
+    type: SEND_CODE_FAILURE,
     message,
   };
 }
 
 export function confirmCode() {
   return {
-    type: CONFIRM_CODE,
+    type: CONFIRM_CODE_REQUEST,
   };
 }
 
 export function passwordResetSuccess() {
   return {
-    type: PASSWORD_RESET_SUCCESS,
+    type: CONFIRM_CODE_SUCCESS,
   };
 }
 
 export function passwordResetError(error) {
   return {
-    type: PASSWORD_RESET_ERROR,
+    type: CONFIRM_CODE_FAILURE,
     error,
   };
 }
