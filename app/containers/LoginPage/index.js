@@ -104,7 +104,6 @@ export function mapDispatchToProps(dispatch) {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       const form = evt.currentTarget;
       if (form.checkValidity() === false) {
-        evt.preventDefault();
         evt.stopPropagation();
       } else {
         dispatch(login());
