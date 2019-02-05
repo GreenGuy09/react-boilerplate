@@ -5,6 +5,7 @@ import {
   CHANGE_NEW_PASSWORD,
   CHANGE_CONFIRM_PASSWORD,
   CHANGE_PASSWORD_VALIDATED,
+  CHANGE_PASSWORD_SUCCESS,
 } from './constants';
 
 export const initialState = fromJS({
@@ -24,6 +25,8 @@ function changePasswordReducer(state = initialState, action) {
       return state.set('confirmPassword', action.confirmPassword);
     case CHANGE_PASSWORD_VALIDATED:
       return state.set('validated', true);
+    case CHANGE_PASSWORD_SUCCESS:
+      return initialState;
     default:
       return state;
   }

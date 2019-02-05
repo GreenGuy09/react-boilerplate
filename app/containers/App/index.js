@@ -15,9 +15,9 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
-
 import NavigationBar from 'containers/NavigationBar';
 import Footer from 'components/Footer';
+import config from '../../config';
 
 import GlobalStyle from '../../global-styles';
 import reducer from './reducer';
@@ -37,6 +37,8 @@ const AppWrapper = styled.div`
 
 class App extends React.PureComponent {
   async componentDidMount() {
+    this.loadFacebookSDK();
+
     try {
       await this.props.onLoadUserProfile();
     } catch (e) {
@@ -44,6 +46,31 @@ class App extends React.PureComponent {
         alert(e);
       }
     }
+  }
+
+  loadFacebookSDK() {
+    window.fbAsyncInit = function() {
+      window.FB.init({
+        appId: config.social.FB,
+        autoLogAppEvents: true,
+        xfbml: true,
+        version: 'v3.2',
+      });
+
+      window.FB.AppEvents.logPageView();
+    };
+
+    (function(d, s, id) {
+      const fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+
+      const js = d.createElement(s);
+      js.id = id;
+      js.src = 'https://connect.facebook.net/en_US/sdk.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    })(document, 'script', 'facebook-jssdk');
   }
 
   render() {

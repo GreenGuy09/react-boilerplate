@@ -18,13 +18,16 @@
 import {
   LOAD_USER_PROFILE_REQUEST,
   LOAD_USER_PROFILE_SUCCESS,
-  LOGOUT_REQUEST,
-  LOGOUT_SUCCESS,
-  LOGOUT_FAILURE,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOAD_USER_PROFILE_FAILURE,
+  LOGIN_WITH_FACEBOOK_FAILURE,
+  LOGIN_WITH_FACEBOOK_SUCCESS,
+  LOGIN_WITH_FACEBOOK_REQUEST,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILURE,
 } from './constants';
 
 export function loadUserProfile() {
@@ -61,6 +64,26 @@ export function loginSuccess() {
 export function loginFailure(error) {
   return {
     type: LOGIN_FAILURE,
+    error,
+  };
+}
+
+export function loginWithFacebook(facebookData) {
+  return {
+    type: LOGIN_WITH_FACEBOOK_REQUEST,
+    facebookData,
+  };
+}
+
+export function loginWithFacebookSuccess() {
+  return {
+    type: LOGIN_WITH_FACEBOOK_SUCCESS,
+  };
+}
+
+export function loginWithFacebookFailure(error) {
+  return {
+    type: LOGIN_WITH_FACEBOOK_FAILURE,
     error,
   };
 }

@@ -57,47 +57,51 @@ export class UserSettingsPage extends React.PureComponent {
                   readOnly
                 />
               </Form.Group>
-              <Form.Group>
-                <Form.Label>Old Password</Form.Label>
-                <Form.Control
-                  autoFocus
-                  required
-                  type="password"
-                  value={this.props.oldPassword}
-                  onChange={this.props.onChangeOldPassword}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please enter a valid password.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <hr />
-              <Form.Group>
-                <Form.Label>New Password</Form.Label>
-                <Form.Control
-                  required
-                  type="password"
-                  value={this.props.newPassword}
-                  onChange={this.props.onChangeNewPassword}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please enter a valid password.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Confirm Password</Form.Label>
-                <Form.Control
-                  required
-                  type="password"
-                  value={this.props.confirmPassword}
-                  onChange={this.props.onChangeConfirmPassword}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please enter a valid password.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Button block type="submit">
-                Change Password
-              </Button>
+              {!this.props.userProfile.isAws ? null : (
+                <div>
+                  <Form.Group>
+                    <Form.Label>Old Password</Form.Label>
+                    <Form.Control
+                      autoFocus
+                      required
+                      type="password"
+                      value={this.props.oldPassword}
+                      onChange={this.props.onChangeOldPassword}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please enter a valid password.
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                  <hr />
+                  <Form.Group>
+                    <Form.Label>New Password</Form.Label>
+                    <Form.Control
+                      required
+                      type="password"
+                      value={this.props.newPassword}
+                      onChange={this.props.onChangeNewPassword}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please enter a valid password.
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Control
+                      required
+                      type="password"
+                      value={this.props.confirmPassword}
+                      onChange={this.props.onChangeConfirmPassword}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please enter a valid password.
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                  <Button block type="submit">
+                    Change Password
+                  </Button>
+                </div>
+              )}
             </Form>
           </section>
         </div>

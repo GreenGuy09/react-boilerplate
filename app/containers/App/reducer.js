@@ -19,6 +19,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  LOGIN_WITH_FACEBOOK_REQUEST,
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAILURE,
@@ -48,6 +49,8 @@ function appReducer(state = initialState, action) {
         .set('isAuthenticated', false)
         .set('isAuthenticating', false)
         .set('error', action.error);
+    case LOGIN_WITH_FACEBOOK_REQUEST:
+      return state.set('facebookData', action.facebookData);
     case LOGOUT_REQUEST:
       return state.set('isLoading', true);
     case LOGOUT_SUCCESS:

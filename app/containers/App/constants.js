@@ -20,6 +20,13 @@ export const LOGIN_REQUEST = 'caregivers/Login/LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'caregivers/Login/LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'caregivers/Login/LOGIN_FAILURE';
 
+export const LOGIN_WITH_FACEBOOK_REQUEST =
+  'caregivers/Login/LOGIN_WITH_FACEBOOK_REQUEST';
+export const LOGIN_WITH_FACEBOOK_SUCCESS =
+  'caregivers/Login/LOGIN_WITH_FACEBOOK_SUCCESS';
+export const LOGIN_WITH_FACEBOOK_FAILURE =
+  'caregivers/Login/LOGIN_WITH_FACEBOOK_FAILURE';
+
 export const LOGOUT_REQUEST = 'caregivers/App/LOGOUT_REQUEST';
 export const LOGOUT_SUCCESS = 'caregivers/App/LOGOUT_SUCCESS';
 export const LOGOUT_FAILURE = 'caregivers/App/LOGOUT_FAILURE';

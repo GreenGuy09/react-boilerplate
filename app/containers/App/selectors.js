@@ -27,6 +27,9 @@ const makeSelectIsLoading = () =>
 const makeSelectError = () =>
   createSelector(selectGlobal, globalState => globalState.get('error'));
 
+const makeSelectFacebookData = () =>
+  createSelector(selectGlobal, loginState => loginState.get('facebookData'));
+
 const makeSelectLocation = () =>
   createSelector(selectRouter, routerState =>
     routerState.get('location').toJS(),
@@ -40,4 +43,5 @@ export {
   makeSelectLocation,
   makeSelectIsAuthenticated,
   makeSelectIsAuthenticating,
+  makeSelectFacebookData,
 };

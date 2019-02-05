@@ -17,7 +17,7 @@ import injectReducer from 'utils/injectReducer';
 import H1 from 'components/H1';
 import messages from './messages';
 import { changeEmail, changePassword, loginValidated } from './actions';
-import { login } from '../App/actions';
+import { login, loginWithFacebook } from '../App/actions';
 import {
   makeSelectEmail,
   makeSelectPassword,
@@ -30,6 +30,7 @@ import {
   makeSelectError,
 } from '../App/selectors';
 import reducer from './reducer';
+import FacebookButton from '../../components/FacebookButton/FacebookButton';
 
 export class LoginPage extends React.PureComponent {
   render() {
@@ -42,6 +43,8 @@ export class LoginPage extends React.PureComponent {
           <FormattedMessage {...messages.header} />
         </H1>
         <div>
+          <FacebookButton onLogin={this.props.onFacebookLogin} />
+          <hr />
           <Form
             noValidate
             validated={this.props.validated}
@@ -84,6 +87,7 @@ export class LoginPage extends React.PureComponent {
 }
 
 LoginPage.propTypes = {
+  onFacebookLogin: PropTypes.func,
   error: PropTypes.object,
   isLoading: PropTypes.bool,
   email: PropTypes.string,
@@ -98,6 +102,9 @@ LoginPage.propTypes = {
 
 export function mapDispatchToProps(dispatch) {
   return {
+    onFacebookLogin: evt => {
+      dispatch(loginWithFacebook(evt));
+    },
     onChangeEmail: evt => dispatch(changeEmail(evt.target.value)),
     onChangePassword: evt => dispatch(changePassword(evt.target.value)),
     onSubmit: evt => {
